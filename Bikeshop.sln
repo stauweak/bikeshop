@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{482D808C-AEDF-46BA-9D94-1553CC5C9ED5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bikeshop.Api", "src\Bikeshop.Api\Bikeshop.Api.csproj", "{4EFF0114-33CB-4197-BA2B-79070EE19566}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AA1F2C51-F6D9-4421-ABD2-461FFF329060}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bikeshop.Api.Tests", "tests\Bikeshop.Api.Tests\Bikeshop.Api.Tests.csproj", "{B9D11F02-DA06-49C1-AA97-58DF07EA7F73}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4EFF0114-33CB-4197-BA2B-79070EE19566}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EFF0114-33CB-4197-BA2B-79070EE19566}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EFF0114-33CB-4197-BA2B-79070EE19566}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EFF0114-33CB-4197-BA2B-79070EE19566}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9D11F02-DA06-49C1-AA97-58DF07EA7F73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9D11F02-DA06-49C1-AA97-58DF07EA7F73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9D11F02-DA06-49C1-AA97-58DF07EA7F73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9D11F02-DA06-49C1-AA97-58DF07EA7F73}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4EFF0114-33CB-4197-BA2B-79070EE19566} = {482D808C-AEDF-46BA-9D94-1553CC5C9ED5}
+		{B9D11F02-DA06-49C1-AA97-58DF07EA7F73} = {AA1F2C51-F6D9-4421-ABD2-461FFF329060}
+	EndGlobalSection
+EndGlobal
