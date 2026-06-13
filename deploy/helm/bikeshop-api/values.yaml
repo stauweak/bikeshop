@@ -1,0 +1,126 @@
+# Valeurs par défaut du chart bikeshop-api.
+# Surchargez-les avec -f mes-valeurs.yaml ou --set clef=valeur.
+
+# IMPORTANT — persistance :
+# L'API utilise SQLite, une base mono-fichier à écrivain unique. Le déploiement
+# est donc volontairement limité à 1 réplica avec une stratégie « Recreate ».
+# Pour passer à l'échelle horizontalement, migrez vers une base serveur
+# (PostgreSQL) puis surchargez « config.connectionString » et augmentez
+# replicaCount. Voir le README.
+replicaCount: 1
+
+image:
+  repository: bikeshop-api
+  # Laisser vide pour utiliser appVersion (.Chart.AppVersion) comme tag.
+  tag: ""
+  pullPolicy: IfNotPresent
+
+# Secrets de pull si l'image est dans un registre privé.
+# - name: regcred
+imagePullSecrets: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: ""
+
+# Configuration applicative (variables d'environnement ASP.NET Core).
+config:
+  # Production | Staging | Development (active Swagger en Development).
+  aspnetcoreEnvironment: "Production"
+  # Chaîne de connexion EF Core. Par défaut : SQLite sur le volume persistant.
+  # Exemple PostgreSQL : "Host=pg;Database=bikeshop;Username=app;Password=..."
+  connectionString: "Data Source=/data/bikeshop.db"
+
+# Variables d'environnement supplémentaires (liste de {name, value}).
+extraEnv: []
+# - name: Logging__LogLevel__Default
+#   value: "Warning"
+
+# Variables tirées de ConfigMaps / Secrets existants.
+envFrom: []
+# - secretRef:
+#     name: bikeshop-api-secrets
+
+# Volume de données pour la base SQLite.
+persistence:
+  enabled: true
+  # Réutiliser un PVC existant plutôt que d'en créer un.
+  existingClaim: ""
+  storageClass: ""
+  accessModes:
+    - ReadWriteOnce
+  size: 1Gi
+  # Point de montage ; doit correspondre au chemin de config.connectionString.
+  mountPath: /data
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  # cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: bikeshop.local
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+  # - secretName: bikeshop-api-tls
+  #   hosts:
+  #     - bikeshop.local
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: "1"
+    memory: 512Mi
+
+# Sondes Kubernetes (endpoints /healthz et /readyz exposés par l'API).
+probes:
+  startup:
+    enabled: true
+    failureThreshold: 30
+    periodSeconds: 2
+  liveness:
+    enabled: true
+    initialDelaySeconds: 10
+    periodSeconds: 10
+  readiness:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+
+# Contexte de sécurité au niveau du pod.
+podSecurityContext:
+  runAsNonRoot: true
+  # GID de l'utilisateur « app » des images .NET ; rend le volume inscriptible.
+  fsGroup: 1654
+  seccompProfile:
+    type: RuntimeDefault
+
+# Contexte de sécurité au niveau du conteneur (utilisateur « app » = 1654).
+securityContext:
+  runAsUser: 1654
+  runAsGroup: 1654
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: false
+  capabilities:
+    drop:
+      - ALL
+
+podAnnotations: {}
+podLabels: {}
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

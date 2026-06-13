@@ -1,0 +1,20 @@
+# Sorties de build .NET
+**/bin/
+**/obj/
+**/*.db
+**/*.db-shm
+**/*.db-wal
+
+# Frontend et dépendances JS (non nécessaires à l'image API)
+frontend/
+
+# Tests (non publiés dans l'image)
+tests/
+
+# Outils et déploiement
+deploy/
+.git/
+.gitignore
+**/.vs/
+**/.vscode/
+*.md

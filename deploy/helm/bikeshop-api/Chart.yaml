@@ -1,0 +1,20 @@
+apiVersion: v2
+name: bikeshop-api
+description: >-
+  API .NET 8 de gestion de magasin de vélo : comptabilité (event sourcing),
+  stocks, atelier, facturation, caisse et approvisionnement fournisseurs.
+type: application
+
+# Version du chart (SemVer) — à incrémenter à chaque modification du chart.
+version: 0.1.0
+
+# Version de l'application empaquetée ; sert de tag d'image par défaut.
+appVersion: "0.1.0"
+
+keywords:
+  - dotnet
+  - api
+  - bikeshop
+home: https://github.com/stauweak/bikeshop
+maintainers:
+  - name: stauweak

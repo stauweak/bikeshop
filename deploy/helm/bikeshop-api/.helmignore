@@ -1,0 +1,9 @@
+# Patterns à exclure lors de l'empaquetage du chart.
+.DS_Store
+.git/
+.gitignore
+*.tmp
+*.bak
+*.swp
+.vscode/
+.idea/
