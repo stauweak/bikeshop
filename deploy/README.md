@@ -11,9 +11,9 @@ docker build -t bikeshop-api:0.1.0 .
 ```
 
 Le `Dockerfile` est multi-étapes :
-1. **build** (`mcr.microsoft.com/dotnet/sdk:8.0`) : `dotnet restore` puis
+1. **build** (`mcr.microsoft.com/dotnet/sdk:10.0`) : `dotnet restore` puis
    `dotnet publish -c Release`.
-2. **runtime** (`mcr.microsoft.com/dotnet/aspnet:8.0`) : image finale, exécutée
+2. **runtime** (`mcr.microsoft.com/dotnet/aspnet:10.0`) : image finale, exécutée
    en utilisateur **non-root** (`app`, UID 1654), écoutant sur le port **8080**.
 
 L'image écoute sur `8080` et écrit sa base SQLite dans `/data/bikeshop.db`

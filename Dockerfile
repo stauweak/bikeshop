@@ -1,5 +1,5 @@
 # --- Étape 1 : compilation et publication ---
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # Restauration en couche séparée pour profiter du cache tant que le csproj ne change pas.
@@ -11,7 +11,7 @@ RUN dotnet publish src/Bikeshop.Api/Bikeshop.Api.csproj \
     -c Release -o /app/publish /p:UseAppHost=false
 
 # --- Étape 2 : image d'exécution ---
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/publish .
 

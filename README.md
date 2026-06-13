@@ -1,6 +1,6 @@
 # 🚲 Bikeshop — gestion de magasin de vélo
 
-Application complète de gestion d'un magasin de vélo : API .NET 8 (monolithe
+Application complète de gestion d'un magasin de vélo : API .NET 10 (monolithe
 modulaire) + frontend React (Vite + TypeScript).
 
 ## Architecture
