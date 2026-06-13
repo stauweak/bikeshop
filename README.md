@@ -24,6 +24,8 @@ src/Bikeshop.Api/
     └── Procurement/      fournisseurs et commandes de composants
 tests/Bikeshop.Api.Tests/ tests d'intégration des endpoints (xUnit)
 frontend/                 React + Vite + TypeScript
+Dockerfile                image conteneur de l'API (multi-étapes, non-root)
+deploy/helm/bikeshop-api/ chart Helm de déploiement Kubernetes
 ```
 
 ### Comptabilité en event sourcing
@@ -77,6 +79,21 @@ dotnet test
 
 28 tests d'intégration couvrent les endpoints de chaque module et les flux
 transverses (vente → stock → comptabilité, commande → réception → stock, etc.).
+
+### Containerisation et déploiement Kubernetes
+
+L'API se construit en image Docker et se déploie via un chart Helm :
+
+```bash
+docker build -t bikeshop-api:0.1.0 .
+helm install bikeshop deploy/helm/bikeshop-api -n bikeshop --create-namespace \
+  --set image.repository=<registre>/bikeshop-api --set image.tag=0.1.0
+```
+
+L'image expose le port **8080**, s'exécute en utilisateur **non-root** et publie
+les sondes `/healthz` (liveness) et `/readyz` (readiness, qui vérifie l'accès à
+la base). Détails, options du chart et passage à PostgreSQL : voir
+[`deploy/README.md`](deploy/README.md).
 
 ## Endpoints principaux
 

@@ -1,0 +1,27 @@
+L'API Bikeshop « {{ .Release.Name }} » est déployée dans le namespace {{ .Release.Namespace }}.
+
+Image : {{ .Values.image.repository }}:{{ include "bikeshop-api.imageTag" . }}
+Réplicas : {{ .Values.replicaCount }} (SQLite = écrivain unique)
+
+Accéder à l'API :
+{{- if .Values.ingress.enabled }}
+  Via l'Ingress :
+  {{- range .Values.ingress.hosts }}
+    http{{ if $.Values.ingress.tls }}s{{ end }}://{{ .host }}
+  {{- end }}
+{{- else if eq .Values.service.type "ClusterIP" }}
+  Le Service est en ClusterIP. Ouvrez un tunnel local :
+
+    kubectl --namespace {{ .Release.Namespace }} port-forward svc/{{ include "bikeshop-api.fullname" . }} 8080:{{ .Values.service.port }}
+
+  puis :
+    - Swagger    : http://localhost:8080/swagger   (si ASPNETCORE_ENVIRONMENT=Development)
+    - Santé      : http://localhost:8080/healthz
+    - Comptes    : http://localhost:8080/api/accounting/accounts
+{{- else }}
+  Type de Service : {{ .Values.service.type }}. Récupérez son adresse via :
+    kubectl --namespace {{ .Release.Namespace }} get svc {{ include "bikeshop-api.fullname" . }}
+{{- end }}
+
+Vérifier l'état du déploiement :
+  kubectl --namespace {{ .Release.Namespace }} rollout status deploy/{{ include "bikeshop-api.fullname" . }}

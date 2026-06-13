@@ -38,6 +38,14 @@ app.UseCors();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+// Sondes Kubernetes : liveness (le processus répond) et readiness (la base est joignable).
+app.MapGet("/healthz", () => Results.Ok(new { status = "Healthy" })).ExcludeFromDescription();
+app.MapGet("/readyz", async (AppDbContext db) =>
+    await db.Database.CanConnectAsync()
+        ? Results.Ok(new { status = "Ready" })
+        : Results.Json(new { status = "NotReady" }, statusCode: StatusCodes.Status503ServiceUnavailable))
+    .ExcludeFromDescription();
+
 app.MapAccountingEndpoints();
 app.MapInventoryEndpoints();
 app.MapWorkshopEndpoints();
