@@ -1,0 +1,19 @@
+{
+  "name": "SportTrack",
+  "short_name": "SportTrack",
+  "description": "Suivi GPS pour montre de sport : parcours, vitesse, distance, altitude",
+  "lang": "fr",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b0f14",
+  "theme_color": "#0b0f14",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
